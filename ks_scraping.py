@@ -5,17 +5,55 @@ import time
 import re
 import csv
 import unicodedata
+# import os.path
+import os
+
 
 from bs4 import BeautifulSoup
 
 
 def main():
 
-    name = "data/projects_subset.csv"
+    # name = "data/projects_subset.csv"
+    name = "data/projects.csv"
+    d_dir = "html/"
+
     # name = "data/projects.csv"
 
-    project_list =list(csv.reader(open(name),quoting = 1))
-    headers = project_list[0]
+    # project_list =list(csv.reader(open(name),quoting = 1))
+    # headers = project_list[0]
+    #
+    #
+    # # first download all the files.
+    # #  index for looping over pages
+    # for ii in range(1,len(project_list)):
+    #     try:
+    #         this_id = project_list[ii][headers.index('id')]
+    #         this_file_path = os.path.join(d_dir,this_id + ".html")
+    #         if os.path.isfile(this_file_path):
+    #             print("skipping file: " + this_id)
+    #         else: # download this file yo
+    #                 this_url = project_list[ii][headers.index('web_url')]+"/description"
+    #                 try:
+    #                     html = urllib.urlopen(this_url).read()
+    #
+    #                     ks_file = open(this_file_path,'w')
+    #                     ks_file.write(html)
+    #                     ks_file.close()
+    #                     time.sleep(.25)
+    #                     print('loaded project ' + str(ii) + "/" + str(len(project_list)))
+    #                 except:
+    #                     print("we had an error reading in the url, what do")
+    #                     time.sleep(1)
+    #     except:
+    #         print("skipping this puppy")
+    #         time.sleep(1)
+
+
+    all_html = os.listdir(d_dir)
+
+
+
 
     output_file = open('data/output.csv','w')
 
