@@ -52,9 +52,6 @@ def main():
 
     all_html = os.listdir(d_dir)
 
-
-
-
     output_file = open('data/output.csv','w')
 
 
@@ -68,29 +65,22 @@ def main():
 
 
     # index for looping over pages
-    for ii in range(1,len(project_list)):
+    for ii in range(len(all_html)):
         try:
-            this_url = project_list[ii][headers.index('web_url')]+"/description"
-
-            # Example URL with some sold out and limited items
-            # this_url = "http://www.kickstarter.com/projects/lansey/loud-bicycle-car-horns-for-cyclists/description"
-            # british example:
-            # this_url =  "https://www.kickstarter.com/projects/1558089494/thunderbirds-1965-new-episodes-from-1960s-recordin?ref=city"
-
-            this_id = project_list[ii][headers.index('id')]
-            launch = project_list[ii][headers.index('launched_at')]
-            deadline =project_list[ii][headers.index('deadline')]
+            this_name = all_html[ii]
 
 
-            read_failed = True
-            # read in the html file
-            while read_failed:
-                try:
-                    html = urllib.urlopen(this_url).read()
-                    read_failed = False
-                except:
-                    print("we had an error reading in the url, what do")
-                    time.sleep(60*1)
+            # read that HTML file
+            this_path = os.path.join(d_dir,this_name)
+            this_file = open(this_path)
+            html = this_file.read()
+            this_file.close()
+
+            # get that ID out
+            this_id = this_name[0:-5]
+            launch = '' #project_list[ii][headers.index('launched_at')]
+            deadline = '' #project_list[ii][headers.index('deadline')]
+
 
             bs = BeautifulSoup(html)
 
@@ -128,12 +118,12 @@ def main():
 
                 to_print = write_csv_line(this_id,backernum,reward_price,reward_shipping,max_back,launch,deadline)+"\n"
 
-                print(to_print)
+                # print(to_print)
 
                 output_file.write(to_print)
         except:
-            print("skipping this puppy")
-            output_file.write("bummer but this line had a problem\n")
+            print("skipping this puppy don't know why" + str(ii))
+            # output_file.write("bummer but this line had a problem\n")
 
 
     output_file.close()
