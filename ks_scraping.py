@@ -18,10 +18,10 @@ def main():
     name = "data/projects.csv"
     d_dir = "html/"
 
-    # name = "data/projects.csv"
+    name = "data/projects.csv"
 
-    # project_list =list(csv.reader(open(name),quoting = 1))
-    # headers = project_list[0]
+    project_list =list(csv.reader(open(name),quoting = 1))
+    headers = project_list[0]
     #
     #
     # # first download all the files.
@@ -49,6 +49,32 @@ def main():
     #         print("skipping this puppy")
     #         time.sleep(1)
 
+#    just output a subset
+    id_2_print = [0,1,6,7,8,9,10,11,12,14,-3]
+    for ii in id_2_print:
+        print(headers[ii])
+
+    projects2_file = open('data/projects2.csv','w')
+
+    for ii in range(0,len(project_list)):
+        # do some validation that this is a complete row
+        if len(project_list[ii]) == 28:
+
+            this_line = []
+            for idx in id_2_print:
+                this_line.append(project_list[ii][idx])
+            # to_print = write_csv_line(this_line)+"\n"
+            to_print = '"' + reduce(lambda x,y: x + '","' + y ,this_line) + '"' + "\n"
+
+            # print(to_print)
+
+            projects2_file.write(to_print)
+
+
+    projects2_file.close()
+
+
+#
 
     all_html = os.listdir(d_dir)
 
